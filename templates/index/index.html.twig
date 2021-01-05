@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <div class="position-relative overflow-hidden p-3 p-md-5 text-center bg-light">
+        {% for message in app.flashes('message') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">Concert Avant 21h</h1>
+            <p class="lead font-weight-normal">Bienvenue sur votre site de réservation de concert !</p>
+            <a class="btn btn-outline-secondary" href="{{ path('concert') }}">Réserver maintenant</a>
+        </div>
+        <div class="product-device box-shadow d-none d-md-block"></div>
+        <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+    </div>
+    <div class="container">
+        <h1>Concerts récents</h1>
+        <div class="row row-cols-1 row-cols-md-5">
+            {% for concert in new_shows %}
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/{{   concert.getBand().getPicture() }}" class="card-img-top" alt="image_groupe">
+                    <div class="card-body">
+                        <h5 class="card-title">{{   concert.getBand().getName()  }}</h5>
+                        <p class="card-text">A lieu le {{   concert.getDate()|date("m/d/Y")  }} à la salle {{   concert.getHall().getName()  }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('concert_show',{id:concert.getId()}) }}" class="card-link">Voir</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
